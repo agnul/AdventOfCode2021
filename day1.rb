@@ -1,5 +1,5 @@
 def parse_input(fname)
-  File.readlines(fname).collect { |l| (l.chomp).to_i }
+  File.readlines(fname).collect { |l| l.chomp.to_i }
 end
 
 def part_one(numbers)
@@ -7,7 +7,7 @@ def part_one(numbers)
 end
 
 def part_two(numbers)
-  numbers.each_cons(4).count { |a, _, _, b| b > a}
+  numbers.each_cons(4).count { |a, _, _, b| b > a }
 end
 
 depths = parse_input('data/1.txt')
