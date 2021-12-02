@@ -1,36 +1,32 @@
 def parse_input(fname)
-  File.readlines(fname).collect(&:chomp)
+  File.readlines(fname).collect do |l|
+    d, c = l.split
+    [d.to_sym, c.to_i]
+  end
 end
 
 def part_one(directions)
-  x, y = 0, 0
-  directions.each do |dir|
-    d, c = dir.split
-    case d
-    when 'forward'
-      x += c.to_i
-    when 'down'
-      y += c.to_i
-    when 'up'
-      y -= c.to_i
-    end
+  x = 0
+  y = 0
+  directions.each do |d, c|
+    x += c if d == :forward
+    y += c if d == :down
+    y -= c if d == :up
   end
   x * y
 end
 
 def part_two(directions)
-  x, y, aim = 0, 0, 0
-  directions.each do |dir|
-    d, c = dir.split
-    case d
-    when 'forward'
-      x += c.to_i
-      y += aim * c.to_i
-    when 'down'
-      aim += c.to_i
-    when 'up'
-      aim -= c.to_i
+  x = 0
+  y = 0
+  aim = 0
+  directions.each do |d, c|
+    if d == :forward
+      x += c
+      y += aim * c
     end
+    aim += c if d == :down
+    aim -= c if d == :up
   end
   x * y
 end
