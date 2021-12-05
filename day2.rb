@@ -1,34 +1,34 @@
 def parse_input(fname)
-  File.readlines(fname).collect do |l|
-    d, c = l.split
-    [d.to_sym, c.to_i]
+  File.readlines(fname).collect do |line|
+    dir, count = line.split
+    [dir.to_sym, count.to_i]
   end
 end
 
 def part_one(directions)
-  x = 0
-  y = 0
-  directions.each do |d, c|
-    x += c if d == :forward
-    y += c if d == :down
-    y -= c if d == :up
+  pos = 0
+  depth = 0
+  directions.each do |dir, count|
+    pos += count if dir == :forward
+    depth += count if dir == :down
+    depth -= count if dir == :up
   end
-  x * y
+  pos * depth
 end
 
 def part_two(directions)
-  x = 0
-  y = 0
+  pos = 0
+  depth = 0
   aim = 0
-  directions.each do |d, c|
-    if d == :forward
-      x += c
-      y += aim * c
+  directions.each do |dir, count|
+    if dir == :forward
+      pos += count
+      depth += aim * count
     end
-    aim += c if d == :down
-    aim -= c if d == :up
+    aim += count if dir == :down
+    aim -= count if dir == :up
   end
-  x * y
+  pos * depth
 end
 
 directions = parse_input('data/2.txt')
