@@ -50,5 +50,5 @@ end
 test_words = %w[00100 11110 10110 10111 10101 01111 00111 11100 10000 11001 00010 01010].map { |n| n.to_i(2) }
 puts "#{part_one(test_words, 5)}, #{part_two(test_words, 5)}"
 
-words = parse_input('data/3.txt')
+words = parse_input('../inputs/day_03.txt')
 puts "#{part_one(words, 12)}, #{part_two(words, 12)}"

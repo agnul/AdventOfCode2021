@@ -31,5 +31,5 @@ def part_two(directions)
   pos * depth
 end
 
-directions = parse_input('data/2.txt')
+directions = parse_input('../inputs/day_02.txt')
 puts "#{part_one(directions)}, #{part_two(directions)}"
