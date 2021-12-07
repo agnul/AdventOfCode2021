@@ -9,15 +9,7 @@ end
 
 def min_cost(subs, cost_fn)
   min, max = subs.minmax
-  min_cost = nil
-  (min..max).each do |pos|
-    cost = 0
-    subs.each do |sub|
-      cost += method(cost_fn).call(sub, pos)
-    end
-    min_cost = cost if min_cost.nil? || cost < min_cost
-  end
-  min_cost
+  (min..max).map { |to| subs.sum { |from| method(cost_fn).call(from, to) } }.min
 end
 
 def part_one(subs)
