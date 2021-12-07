@@ -1,14 +1,15 @@
 class BingoCard
+  BINGO = 5
+  ROWS = (0..4)
+  COLS = (0..4)
+
   def initialize(rows)
     @numbers = {}
-    @not_crossed = []
-    @row_crosses = [0] * 5
-    @col_crosses = [0] * 5
+    @crossed = [0] * (ROWS.size * COLS.size)
 
     rows.each_with_index do |row, i|
       row.split.each_with_index do |num, j|
-        @numbers[num.to_i] = [i, j]
-        @not_crossed << num.to_i
+        @numbers[num.to_i] = (i * COLS.size) + j
       end
     end
   end
@@ -16,24 +17,33 @@ class BingoCard
   def cross(num)
     return unless @numbers.key?(num)
 
-    i, j = @numbers[num]
-    @not_crossed.delete(num)
-    @row_crosses[i] += 1
-    @col_crosses[j] += 1
+    @crossed[@numbers[num]] = 1
   end
 
   def bingo?
-    @row_crosses.count(5).positive? || @col_crosses.count(5).positive?
+    horiz = ROWS.any? { |r| @crossed[row(r)].sum == BINGO }
+    vert = COLS.any? { |c| @crossed[col(c)].sum == BINGO }
+    horiz || vert
   end
 
   def score(last_number)
-    last_number * @not_crossed.sum
+    last_number * @numbers.keys.each_with_index.sum { |n, i| @crossed[i].zero? ? n : 0 }
   end
 
   def reset!
-    @not_crossed = @numbers.keys
-    @row_crosses = [0] * 5
-    @col_crosses = [0] * 5
+    @crossed = [0] * (ROWS.size * COLS.size)
+  end
+
+  private
+
+  def row(r)
+    first = r * COLS.size
+    last = (r + 1) * COLS.size
+    (first...last)
+  end
+
+  def col(c)
+    (c...(ROWS.size * COLS.size)).step(ROWS.size)
   end
 end
 
