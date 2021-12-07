@@ -1,14 +1,11 @@
 def evolve(population, days)
   register = []
   (0..8).each { |i| register << population.count(i) }
-  count = population.size
   days.times do
-    newborn, = register.shift(1)
-    register << newborn
-    register[6] += newborn
-    count += newborn
+    register.rotate!(1)
+    register[6] += register[-1]
   end
-  count
+  register.sum
 end
 
 def part_one(population)
