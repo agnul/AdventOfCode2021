@@ -33,13 +33,13 @@ def parse_input(fname)
 end
 
 def local_min?(map, row, col)
-  neighbours = [map.at(row, col)]
+  neighbours = []
   neighbours << map.at(row - 1, col) unless row.zero?
   neighbours << map.at(row + 1, col) if row + 1 < map.rows
   neighbours << map.at(row, col - 1) unless col.zero?
   neighbours << map.at(row, col + 1) if col + 1 < map.cols
 
-  map.at(row, col) == neighbours.min && neighbours.sum != (map.at(row, col) * neighbours.size)
+  neighbours.all? { |n| n > map.at(row, col) }
 end
 
 def part_one(depth_map)
