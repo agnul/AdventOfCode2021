@@ -41,7 +41,7 @@ end
 
 def part_two(template, rules)
   pair_counts = Hash.new(0)
-  (" #{template} ".size - 1).times { |i| pair_counts[template[i, 2]] += 1 }
+  (template.size - 1).times { |i| pair_counts[template[i, 2]] += 1 }
   40.times { pair_counts = count_pairs(pair_counts, rules) }
   counts = Hash.new(0)
   pair_counts.each { |p, c| counts[p[0]] += c }
